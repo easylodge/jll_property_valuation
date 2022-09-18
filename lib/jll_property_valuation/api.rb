@@ -5,16 +5,16 @@ module JllPropertyValuation
   class Api
     include Endpoints::Authentication
 
-    attr_accessor :username, :password, :api_key
+    attr_accessor :username, :password, :token
 
-    def initialize(username, password, api_key)
+    def initialize(username, password, token)
       @username = username
       @password = password
-      @token = api_key
+      @token = token
       @base_url = "https://api.openavm.com"
     end
 
-    ROUTES = [
+    AVM_ROUTES = [
       "avm/capital/value",
       "avm/rental/value",
       "index/capital/value",
@@ -33,7 +33,33 @@ module JllPropertyValuation
       "spatial/suburb/find"
     ].freeze
 
-    Api::ROUTES.each do |route|
+    Api::AVM_ROUTES.each do |route|
+      define_method(route.tr('/', '_').to_sym) do |body|
+        return post(route, { "Filter": body })
+      end
+    end
+
+    RISK_ROUTES = [
+      "insight/environment/bushfire/risk/find",
+      "insight/environment/flood/risk/find",
+      "insight/environment/communicationtower/risk/find",
+      "insight/environment/electricitytransmission/risk/find",
+      "insight/environment/zone/risk/find",
+      "insight/environment/airnoise/risk/find",
+      "insight/environment/railnoise/risk/find",
+      "insight/environment/roadnoise/risk/find",
+      "insight/economy/rank/risk/find",
+      "insight/economy/employmentdiversity/risk/find",
+      "insight/economy/employmentrate/risk/find",
+      "insight/economy/lendersmortgageinsurance/risk/find",
+      "insight/market/inventory/risk/find",
+      'insight/market/forecast/risk/find',
+      "insight/market/liquidity/risk/find",
+      "insight/market/volatility/risk/find",
+      "insight/market/rentaltenure/risk/find"
+    ].freeze
+
+    Api::RISK_ROUTES.each do |route|
       define_method(route.tr('/', '_').to_sym) do |body|
         return post(route, { "Filter": body })
       end
