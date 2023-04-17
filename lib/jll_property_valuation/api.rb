@@ -11,7 +11,7 @@ module JllPropertyValuation
       @username = username
       @password = password
       @token = token
-      @base_url = "https://api.openavm.com"
+      @base_url = "https://valoremau-api.jll.com"
     end
 
     AVM_ROUTES = [
