@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jll_property_valuation (1.0.0)
+    jll_property_valuation (2.0.0)
 
 GEM
   remote: https://rubygems.org/
